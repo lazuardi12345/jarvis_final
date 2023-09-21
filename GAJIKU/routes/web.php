@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DivisiController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenggajianController;
 use App\Http\Controllers\TujanganController;
 use Illuminate\Support\Facades\Route;
@@ -14,9 +16,22 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', function () {
-    return view('contents.dashboard');
-});
+// Route::get('/', function () {
+//     return view('contents.dashboard');
+// });
+
+
+
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login-proses', [LoginController::class, 'login_proses'])->name('login-proses');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/register', [LoginController::class, 'register'])->name('register');
+Route::post('/register-proses', [LoginController::class, 'register_proses'])->name('register-proses');
+
+Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'as' => 'admin'], function(){
+
+Route::get('/', [HomeController::class, 'index'])->name('/');
+
 Route::get('/employee', [EmployeeController::class, 'index']);
 Route::get('/employee/create', [EmployeeController::class, 'create']);
 Route::post('/employee', [EmployeeController::class, 'store']);
@@ -46,3 +61,6 @@ Route::post('/tunjangans', [TujanganController::class, 'store']);
 Route::get('/tunjangans/{id}/edit', [TujanganController::class, 'edit']);
 Route::put('/tunjangans/{id}', [TujanganController::class, 'update']);
 Route::delete('/tunjangans/{id}', [TujanganController::class, 'destroy'])->name('tunjangan.destroy');
+
+});
+

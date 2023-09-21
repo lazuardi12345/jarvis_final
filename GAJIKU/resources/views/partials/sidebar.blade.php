@@ -86,6 +86,12 @@
                                 <span>User Profile</span>
                             </a>
                         </li>
+                        <li class="sidebar-item {{ Request::is('logout') ? 'active' : ' ' }}">
+                            <a href="logout" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
 
 
                         {{-- <a class="dropdown-item" href="{{ route('logout') }}"
